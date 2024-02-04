@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import './App.css';
 import SignUp from './pages/SignUp';
 import BookingForm from './BookingSite/BookingForm';
-import CabBookingPage from './BookingSite/CabBookingPage';
+
 
 
 function App() {
