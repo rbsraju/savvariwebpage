@@ -5,6 +5,9 @@ import  Navbar  from './pages/Navbar';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import './App.css';
 import SignUp from './pages/SignUp';
+import BookingForm from './BookingSite/BookingForm';
+import CabBookingPage from './BookingSite/CabBookingPage';
+
 
 function App() {
   return (
@@ -15,6 +18,7 @@ function App() {
       <Route path="/signIn" element={<Login />} />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/" element={<Home />} />
+     <Route path="/BookRide" element ={<BookingForm destination={''} current={''} date={''} time={''} />}/>
       <Route path="*" element={<Navigate to="/" />} />
        
        

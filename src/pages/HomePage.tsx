@@ -1,7 +1,13 @@
 import React from 'react';
 import '../css/Home.css';
 
+import { useNavigate } from 'react-router-dom';
+
 const HomePage = () => {
+    const navigate = useNavigate();
+    const handleButtonClick = () => {
+        navigate('/BookRide')
+      };
   return (
     <div className="home-container">
       
@@ -9,7 +15,7 @@ const HomePage = () => {
       <section className="hero">
         <h2>Book a Ride with Savvari</h2>
         <p>Enjoy a comfortable and reliable ride experience with Savvari.</p>
-        <button>Book a Ride</button>
+        <button onClick={handleButtonClick}>Book a Ride</button>
       </section>
 
       <section className="status">

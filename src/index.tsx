@@ -8,6 +8,7 @@ import store from './store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const googleMapsApiKey = "cvdvc xc xcsdsdfd";
 root.render(
   <React.StrictMode>
     <Provider store={store}>

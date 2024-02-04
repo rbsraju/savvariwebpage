@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
     "target": "es5",
+    
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "es2015"
     ],
+    
+    
+    
+    "types": ["@types/react-places-autocomplete"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
