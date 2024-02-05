@@ -9,7 +9,7 @@
       "es2015"
     ],
     
-    
+
     
     "types": ["@types/react-places-autocomplete"],
     "allowJs": true,
