@@ -18,7 +18,7 @@ const SignUp: React.FC = () => {
       email: Yup.string().email('Invalid email address').required('Email is required'),
       phoneNumber: Yup.string().required('Phone Number is required'),
       gender: Yup.string().required('Gender is required'),
-      password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+      password: Yup.string().required('Password is required'). matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 'Password must be at least 8 characters and contain at least one letter and one number'),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required('Confirm Password is required'),

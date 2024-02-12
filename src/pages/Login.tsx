@@ -8,6 +8,9 @@ import { setToken } from '../Slices/authSlice';
 import { Navigate, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+import { setID, setRole } from '../Slices/idSlice';
+
+
 interface FormData {
     
     email: string;
@@ -18,6 +21,7 @@ const Login: React.FC=() => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
+   
     const [formData, setFormData] = useState({
         // Your form data fields
     
@@ -25,24 +29,33 @@ const Login: React.FC=() => {
         password:''
         // Add more fields as needed
       });
-      useEffect( ()=>{
-         async function checkDetails() {
-                  console.log('Checking details');
-            try {
-                // Make a POST request using Axios
-                const response = await axios.post('https://localhost:7151/api/Authentication', formData);
-               
-                dispatch(setToken(response.data.Result));
-                // Handle the response if needed
-                navigate('/')
-              } catch (error) {
-                // Handle errors
-                console.error('Error:', error);
-              }
-         }
-        checkDetails();
-      },[formData]);
-    
+     const  callApi= async()=>{
+        try {
+            // Make a POST request using Axios
+             await axios.post('https://localhost:7151/api/Authentication', formData)
+            .then(response=>{
+                dispatch(setToken(response.data.token));
+                dispatch(setID(response.data.id));
+                dispatch(setRole(response.data.role));
+                navigate('/');
+            })
+            .catch(error=>{
+                if(error.response.status==400)
+                {
+                    alert(error.response.data.errors.password);
+                }else if(error.response.status==404)
+                {
+                    alert(error.response.data);
+                }
+            });
+       
+          } catch (error) {
+            // Handle errors
+            
+            console.error('Error:', error);
+          }
+      }
+ 
      
   const formik = useFormik({
     initialValues: {
@@ -55,7 +68,7 @@ const Login: React.FC=() => {
     }),
     onSubmit: (values:FormData ) => {
         setFormData(values);
-       console.log(formData.email);
+       callApi();
        
     },
   });
@@ -93,6 +106,7 @@ const Login: React.FC=() => {
           )}
         </div>
         <button type="submit">Submit</button>
+        
       </form>
     </div>
   );

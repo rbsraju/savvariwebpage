@@ -33,6 +33,10 @@ body {
   .status {
     margin: 40px 0;
   }
+  .time{
+    all: unset;
+    
+  }
   
   button {
     padding: 10px 20px;
