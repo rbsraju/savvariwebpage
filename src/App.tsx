@@ -10,7 +10,11 @@ import RideList from './BookingSite/RideList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-
+const account = {
+  id: '',
+  name: '',
+  email: '',
+};
 
 function App() {
   return (
@@ -22,7 +26,7 @@ function App() {
       <Route path="/signIn" element={<Login />} />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/" element={<Home />} />
-     <Route path="/BookRide" element ={<BookingForm destination={''} current={''} date={''} time={''} status={1} id={''} />}/>
+     <Route path="/BookRide" element ={<BookingForm id={''} destination={''} current={''} date={''} time={''} status={0} account={account}  />}/>
       <Route path="/RideStatus" element={<RideList/>}/>
       <Route path="*" element={<Navigate to="/" />} />
        

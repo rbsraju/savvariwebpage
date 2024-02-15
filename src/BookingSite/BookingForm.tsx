@@ -20,21 +20,48 @@ interface BookingFormData {
   current:string;
   date: string;
   time: string;
-  status:number
+  status:number;
+  account: Account;
 }
-
+interface Account {
+    id: string;
+    name: string;
+    email: string;
+  }
+  
 const BookingFormSchema = yup.object().shape({
   destination: yup.string().required('Destination is required'),
   current: yup.string().required('Current is required').notOneOf([yup.ref('destination')], 'Destination and current address should be different'),
   date: yup.string().required('Date is required'),
   time: yup.string().required('Time is required'),
+  account: yup.object().shape({
+    id: yup.string().required('Account ID is required'),
+    name: yup.string().required('Account name is required'),
+    email: yup.string().email('Invalid email format').required('Account email is required'),
+  }),
 });
 
-const BookingForm: React.FC<BookingFormData> = (BookingFormData) => {
+const BookingForm: React.FC<BookingFormData> = () => {
     const navigate = useNavigate();
     const [token, setToken] = useState<string>('');
     const [id, setId] = useState<string>('');
-  
+    const [accounts, setAccounts] = useState<Account[]>([]);
+
+  // Fetch account details using Axios on component mount
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      try {
+        // Make a GET request to fetch account details
+        const response = await axios.get('https://localhost:7151/DriverAccounts');
+        setAccounts(response.data);
+      } catch (error) {
+        // Handle errors
+        console.error('Error fetching accounts:', error);
+      }
+    };
+
+    fetchAccounts();
+  }, []);
     // Retrieve values from cookies on component mount
     useEffect(() => {
       const idCookieValue = Cookies.get('idCookie');
@@ -75,7 +102,8 @@ const BookingForm: React.FC<BookingFormData> = (BookingFormData) => {
       current:'',
       date: '',
       time: '',
-      status: 1
+      status: 1,
+      account: { id: '', name: '', email: '' },
     },
     validationSchema: BookingFormSchema,
     onSubmit: (values) => {
@@ -95,14 +123,35 @@ const BookingForm: React.FC<BookingFormData> = (BookingFormData) => {
       <div>
         <label>Destination:</label>
         <LocationSearch address={formik.values.destination} setAddress={formik.setFieldValue.bind(null, 'destination')} />
-        {formik.touched.destination && formik.errors.destination && <div>{formik.errors.destination}</div>}
+        {  formik.touched.destination && formik.errors.destination && <div>{formik.errors.destination}</div>}
       </div>
       <div>
         <label>Current:</label>
         <LocationSearch address={formik.values.current} setAddress={formik.setFieldValue.bind(null, 'current')} />
         {formik.touched.destination && formik.errors.current && <div>{formik.errors.current}</div>}
       </div>
-
+      <div>
+        <label>Driver:</label>
+        <select
+          name="account"
+          value={formik.values.account.id}
+          onChange={(e) => {
+            const selectedAccount = accounts.find(account => account.id === e.target.value);
+            formik.setFieldValue('account', selectedAccount || { id: '', name: '', email: '' });
+          }}
+          onBlur={formik.handleBlur}
+        >
+          <option value="" disabled>Select Driver</option>
+          {accounts.map((account) => (
+            <option key={account.id} value={account.id}>
+              {account.name}
+            </option>
+          ))}
+        </select>
+        {formik.touched.account && formik.errors.account && (
+          <div>{JSON.stringify(formik.errors.account)}</div>
+        )}
+      </div>
       <div>
         <label>Date:</label>
         <input type="date" name="date" value={formik.values.date} onChange={formik.handleChange} onBlur={formik.handleBlur} />

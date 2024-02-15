@@ -5,6 +5,7 @@ import { RootState } from "../store";
 import { format } from "util";
 import Cookies from "js-cookie";
 import api from '../pages/axiosL&A'
+import '../css/Login.css';
 
 const RideList: React.FC = () => {
   const [rides, setRides] = useState([]);
@@ -38,6 +39,7 @@ const RideList: React.FC = () => {
               <th>Date</th>
               <th>Destination</th>
               <th>Current</th>
+              <th>Driver</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -48,6 +50,7 @@ const RideList: React.FC = () => {
                 <td>{ride.date}</td>
                 <td>{ride.destination}</td>
                 <td>{ride.current}</td>
+                <td>{ride.account.name}</td>
                 <td>{ride.status==1?(<p>Pending</p>):(<p>Approved</p>)}
                 </td>
                 <td style={{ display: "none" }}>{ride.rideId}</td>
