@@ -1,5 +1,5 @@
 // src/components/BookingForm.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import LocationSearch from './LocationSearch';
@@ -8,9 +8,10 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import TimePicker from 'react-time-picker';
-
+import api from '../pages/axiosL&A'
 import { Form as bForm, Button, Col } from 'react-bootstrap';
 import { format } from 'util';
+import Cookies from 'js-cookie';
 
 
 interface BookingFormData {
@@ -31,19 +32,33 @@ const BookingFormSchema = yup.object().shape({
 
 const BookingForm: React.FC<BookingFormData> = (BookingFormData) => {
     const navigate = useNavigate();
-    const jwt = useSelector((state: RootState) => state.auth.token);
-    const cid = useSelector((state: RootState) => state.id.id);
+    const [token, setToken] = useState<string>('');
+    const [id, setId] = useState<string>('');
+  
+    // Retrieve values from cookies on component mount
+    useEffect(() => {
+      const idCookieValue = Cookies.get('idCookie');
+      const tokenCookieValue = Cookies.get('tokenCookie');
+  
+      if (idCookieValue) {
+        setId(idCookieValue);
+      }
+  
+      if (tokenCookieValue) {
+        setToken(tokenCookieValue);
+      }
+    }, []);
 
-    const sendRideDetails=(rideData:BookingFormData)=>{
-        alert(jwt);
+    const sendRideDetails=async (rideData:BookingFormData)=>{
+       
         try {
-            if(cid!=null){
-                rideData.id=cid;
-                alert(cid);
+            if(id!=null){
+                rideData.id=id;
+                
             }
            
             // Make a POST request using Axios
-            const response =  axios.post('https://localhost:7000/api/Ride', rideData);
+            const response =  await api.post('/api/Ride', rideData);
            
            
             // Handle the response if needed
@@ -64,7 +79,7 @@ const BookingForm: React.FC<BookingFormData> = (BookingFormData) => {
     },
     validationSchema: BookingFormSchema,
     onSubmit: (values) => {
-        if (jwt==null){
+        if (token==null){
             alert("Login First");
             navigate("/signIn");
         }

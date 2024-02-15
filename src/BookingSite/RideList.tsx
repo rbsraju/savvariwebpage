@@ -3,19 +3,21 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { format } from "util";
+import Cookies from "js-cookie";
+import api from '../pages/axiosL&A'
 
 const RideList: React.FC = () => {
   const [rides, setRides] = useState([]);
   const [id, setid] = useState("");
-  var userRole = useSelector((state: RootState) => state.id.id);
+  var userRole = Cookies.get('idCookie');
   
   useEffect(() => {
     const fetchRides = async () => {
-      console.log(userRole);
+    
       try {
         // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
-        const response = await axios.get(
-          "https://localhost:7000/api/Ride/" + userRole
+        const response = await api.get(
+          "/api/Ride/" + userRole
         );
         setRides(response.data);
       } catch (error) {
@@ -42,8 +44,8 @@ const RideList: React.FC = () => {
           <tbody>
             {rides.map((ride: any) => (
               <tr key={ride.rideId}>
-                <td>{ride.dropTime }</td>
-                <td>{format(new Date(ride.date), 'MM/dd')}</td>
+                <td>{ride.time }</td>
+                <td>{ride.date}</td>
                 <td>{ride.destination}</td>
                 <td>{ride.current}</td>
                 <td>{ride.status==1?(<p>Pending</p>):(<p>Approved</p>)}

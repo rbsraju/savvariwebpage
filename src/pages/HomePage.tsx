@@ -1,21 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/Home.css';
 
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../store';
 import { useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
 
 const HomePage = () => {
     const navigate = useNavigate();
-    var userRole=useSelector((state: RootState) => state.id.id);
-   
-
+    const [token, setToken] = useState<string>('');
+    const [id, setId] = useState<string>('');
+  
+    // Retrieve values from cookies on component mount
+    useEffect(() => {
+      const idCookieValue = Cookies.get('idCookie');
+      const tokenCookieValue = Cookies.get('tokenCookie');
+  
+      if (idCookieValue) {
+        setId(idCookieValue);
+      }
+  
+      if (tokenCookieValue) {
+        setToken(tokenCookieValue);
+      }
+    }, []);
+    
     
     const handleRideNavigation = () => {
         navigate('/BookRide')
       };
       const handleRideStatusNavigation = () => {
-        if(userRole!=null){
+        if(id!=''){
+            
         navigate('/RideStatus')
         }else{
             alert("LoginFirst");

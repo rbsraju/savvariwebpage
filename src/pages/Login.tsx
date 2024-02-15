@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../Slices/authSlice';
 import { Navigate, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 import { setID, setRole } from '../Slices/idSlice';
 
 
@@ -19,9 +19,9 @@ interface FormData {
   }
 const Login: React.FC=() => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+  
     
-   
+  
     const [formData, setFormData] = useState({
         // Your form data fields
     
@@ -29,20 +29,23 @@ const Login: React.FC=() => {
         password:''
         // Add more fields as needed
       });
+    
+     
+
      const  callApi= async()=>{
         try {
             // Make a POST request using Axios
              await axios.post('https://localhost:7151/api/Authentication', formData)
             .then(response=>{
-                dispatch(setToken(response.data.token));
-                dispatch(setID(response.data.id));
-                dispatch(setRole(response.data.role));
+                Cookies.set('tokenCookie',response.data.token);
+                Cookies.set('idCookie',response.data.id);
+                Cookies.set('roleCookie',response.data.role);
                 navigate('/');
             })
             .catch(error=>{
                 if(error.response.status==400)
                 {
-                    alert(error.response.data.errors.password);
+                    alert(error.response.data);
                 }else if(error.response.status==404)
                 {
                     alert(error.response.data);

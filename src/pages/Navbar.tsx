@@ -5,17 +5,25 @@ import '../css/Navbar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import  { RootState } from '../store';
 import { clearToken } from '../Slices/authSlice';
+import Cookies from 'js-cookie';
 
 const  Navbar:React.FC = () => {
-    const [token, setToken] = useState<string>('');
-    const dispatch = useDispatch();
-    const jwt = useSelector((state: RootState) => state.auth.token);
-    useEffect(()=>{
-        
-        setToken(jwt||'');
-    })
+  const [token, setToken] = useState<string>('');
+  
+
+  // Retrieve values from cookies on component mount
+  useEffect(() => {
+  
+    const tokenCookieValue = Cookies.get('tokenCookie');
+    if (tokenCookieValue) {
+      setToken(tokenCookieValue);
+    }
+  },[]);
    const handleClearToken=() => {
-    dispatch(clearToken())
+    Cookies.set('tokenCookie','', { expires: new Date(0) })
+    Cookies.set('idCookie','', { expires: new Date(0) })
+
+    setToken('');
    }
    
 
