@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import '../css/SignUp.css';
+//import '../css/SignUp.css';
 
 const SignUp: React.FC = () => {
   const formik = useFormik({
@@ -29,11 +29,11 @@ const SignUp: React.FC = () => {
   });
 
   return (
-    <div className="signup-container">
+    <div className="container">
       <h1>Sign Up</h1>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
-          <label htmlFor="fullName">Full Name:</label>
+          <label htmlFor="fullName">Full Name</label>
           <input
             type="text"
             id="fullName"
@@ -47,7 +47,7 @@ const SignUp: React.FC = () => {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
@@ -59,7 +59,7 @@ const SignUp: React.FC = () => {
           {formik.touched.email && formik.errors.email && <div className="error">{formik.errors.email}</div>}
         </div>
         <div className="form-group">
-          <label htmlFor="phoneNumber">Phone Number:</label>
+          <label htmlFor="phoneNumber">Phone Number</label>
           <input
             type="text"
             id="phoneNumber"
@@ -73,7 +73,7 @@ const SignUp: React.FC = () => {
           )}
         </div>
         <div className="form-group gender-group">
-          <label className='gender-label'>Gender:</label>
+          <label className='gender-label'>Gender</label>
           <div className="gender-options">
             <label>
               <input
@@ -103,7 +103,7 @@ const SignUp: React.FC = () => {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -117,7 +117,7 @@ const SignUp: React.FC = () => {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             type="password"
             id="confirmPassword"

@@ -5,7 +5,7 @@ import { RootState } from "../store";
 import { format } from "util";
 import Cookies from "js-cookie";
 import api from '../pages/axiosL&A'
-import '../css/Login.css';
+//import '../css/Login.css';
 
 const RideList: React.FC = () => {
   const [rides, setRides] = useState([]);

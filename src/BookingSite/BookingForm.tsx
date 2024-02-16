@@ -12,7 +12,7 @@ import api from '../pages/axiosL&A'
 import { Form as bForm, Button, Col } from 'react-bootstrap';
 import { format } from 'util';
 import Cookies from 'js-cookie';
-import '../css/BookCabForm.css';
+//import '../css/BookCabForm.css';
 
 
 interface BookingFormData {
@@ -120,20 +120,20 @@ const BookingForm: React.FC<BookingFormData> = () => {
   
 
   return (
-    <div className="signup-container">
+    <div className="container">
     <form onSubmit={formik.handleSubmit}>
       <div>
-        <label>Destination:</label>
+        <label>Destination</label>
         <LocationSearch address={formik.values.destination} setAddress={formik.setFieldValue.bind(null, 'destination')} />
         {  formik.touched.destination && formik.errors.destination && <div>{formik.errors.destination}</div>}
       </div>
       <div>
-        <label>Current:</label>
+        <label>Current</label>
         <LocationSearch address={formik.values.current} setAddress={formik.setFieldValue.bind(null, 'current')} />
         {formik.touched.destination && formik.errors.current && <div>{formik.errors.current}</div>}
       </div>
       <div>
-        <label>Driver:</label>
+        <label>Driver(Optional)</label>
         <select
           name="account"
           value={formik.values.account.id}
@@ -143,7 +143,7 @@ const BookingForm: React.FC<BookingFormData> = () => {
           }}
           onBlur={formik.handleBlur}
         >
-          <option value="" disabled>Select Driver</option>
+          <option value="" disabled >Select Driver</option>
           {accounts.map((account) => (
             <option key={account.id} value={account.id}>
               {account.name}
@@ -156,13 +156,13 @@ const BookingForm: React.FC<BookingFormData> = () => {
         )}
       </div>
       <div>
-        <label>Date:</label>
+        <label>Date</label>
         <input type="date" name="date" value={formik.values.date} onChange={formik.handleChange} onBlur={formik.handleBlur} />
         {formik.touched.date && formik.errors.date && <div>{formik.errors.date}</div>}
       </div>
 
       <div>
-        <label>Time:</label>
+        <label>Time</label>
         <input type="time"  name="time" value={formik.values.time}  onChange={formik.handleChange} className="form-control" onBlur={formik.handleBlur} />
         {formik.touched.time && formik.errors.time && <div>{formik.errors.time}</div>}
       </div>

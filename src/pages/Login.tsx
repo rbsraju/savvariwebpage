@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import '../css/Login.css'; // Import your CSS file
+//import '../css/Login.css'; // Import your CSS file
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../Slices/authSlice';
@@ -77,11 +77,11 @@ const Login: React.FC=() => {
   });
 
   return (
-    <div className="login-container">
+    <div className="container">
       <h1>Login</h1>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">email:</label>
+          <label htmlFor="email">email</label>
           <input
             type="text"
             id="email"
@@ -95,7 +95,7 @@ const Login: React.FC=() => {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -108,7 +108,7 @@ const Login: React.FC=() => {
             <div className="error">{formik.errors.password}</div>
           )}
         </div>
-        <button type="submit">Submit</button>
+        <button className="btn btn-primary btn-lg text-center" type="submit">Submit</button>
         
       </form>
     </div>
