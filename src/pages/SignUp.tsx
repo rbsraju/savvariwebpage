@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-//import '../css/SignUp.css';
+import '../css/SignUp.css';
 
 const SignUp: React.FC = () => {
   const formik = useFormik({

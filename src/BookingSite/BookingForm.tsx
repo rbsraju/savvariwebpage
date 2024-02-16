@@ -12,6 +12,7 @@ import api from '../pages/axiosL&A'
 import { Form as bForm, Button, Col } from 'react-bootstrap';
 import { format } from 'util';
 import Cookies from 'js-cookie';
+import '../css/BookCabForm.css';
 
 
 interface BookingFormData {
@@ -35,9 +36,9 @@ const BookingFormSchema = yup.object().shape({
   date: yup.string().required('Date is required'),
   time: yup.string().required('Time is required'),
   account: yup.object().shape({
-    id: yup.string().required('Account ID is required'),
-    name: yup.string().required('Account name is required'),
-    email: yup.string().email('Invalid email format').required('Account email is required'),
+    id: yup.string(),
+    name: yup.string(),
+    email: yup.string().email('Invalid email format'),
   }),
 });
 
@@ -119,6 +120,7 @@ const BookingForm: React.FC<BookingFormData> = () => {
   
 
   return (
+    <div className="signup-container">
     <form onSubmit={formik.handleSubmit}>
       <div>
         <label>Destination:</label>
@@ -148,8 +150,9 @@ const BookingForm: React.FC<BookingFormData> = () => {
             </option>
           ))}
         </select>
-        {formik.touched.account && formik.errors.account && (
+        {  formik.touched.account && formik.errors.account && (
           <div>{JSON.stringify(formik.errors.account)}</div>
+          
         )}
       </div>
       <div>
@@ -168,6 +171,7 @@ const BookingForm: React.FC<BookingFormData> = () => {
      
       <button type="submit">Book Ride</button>
     </form>
+    </div>
   );
 };
 

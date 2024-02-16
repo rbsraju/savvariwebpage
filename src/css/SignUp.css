@@ -6,6 +6,7 @@
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background: #fff;
+  border-radius: 6px;
 }
 
 .form-group {
@@ -24,6 +25,9 @@ select {
   padding: 8px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  border-radius: 6px;
+ 
+  border-color: white;
 }
 
 .error {
@@ -49,10 +53,11 @@ select {
 }
 
 button {
-  background-color: #4caf50;
+  background-color: #3062AF;
   color: white;
   padding: 10px 15px;
   border: none;
-  border-radius: 5px;
+  border-radius: 1px;
   cursor: pointer;
+ 
 }
