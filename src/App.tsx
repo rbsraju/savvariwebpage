@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import BookingForm from './BookingSite/BookingForm';
 import RideList from './BookingSite/RideList';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AvailableRides from './pages/AvailableRides';
 
 
 const account = {
@@ -29,6 +30,7 @@ function App() {
      <Route path="/BookRide" element ={<BookingForm id={''} destination={''} current={''} date={''} time={''} status={0} account={account}  />}/>
       <Route path="/RideStatus" element={<RideList/>}/>
       <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/availableRides" element={<AvailableRides/>} />
        
        
     </Routes>

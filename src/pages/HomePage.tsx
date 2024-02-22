@@ -38,6 +38,9 @@ const HomePage = () => {
             navigate('/')
         }
       };
+      const availableRidesNavigation=()=>{
+        navigate('/availableRides');
+      }
   return (
     <div className="home-container">
       
@@ -52,6 +55,11 @@ const HomePage = () => {
         <h2>Check Ride Status</h2>
         <p>Track your ride in real-time with our status checker.</p>
         <button onClick={handleRideStatusNavigation}>Check Ride Status</button>
+      </section>
+      <section className="AvailableRides">
+        <h2>AvailableRides</h2>
+        <p>Track your ride in real-time with our status checker.</p>
+        <button onClick={availableRidesNavigation}>AvailableRides</button>
       </section>
     </div>
   );

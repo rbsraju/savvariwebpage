@@ -108,7 +108,7 @@ const Login: React.FC=() => {
             <div className="error">{formik.errors.password}</div>
           )}
         </div>
-        <button className="btn btn-primary btn-lg text-center" type="submit">Submit</button>
+        <button  type="submit">Submit</button>
         
       </form>
     </div>
