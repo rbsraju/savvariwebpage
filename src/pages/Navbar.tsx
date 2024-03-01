@@ -14,10 +14,13 @@ const  Navbar:React.FC = () => {
   // Retrieve values from cookies on component mount
   useEffect(() => {
   
-    const tokenCookieValue = Cookies.get('tokenCookie');
-    if (tokenCookieValue) {
-      setToken(tokenCookieValue);
-    }
+    const getTokenFromCookie = async () => {
+      const tokenCookieValue = Cookies.get('tokenCookie');
+      if (tokenCookieValue) {
+        setToken(tokenCookieValue);
+      }
+    };
+    getTokenFromCookie();
   },[]);
    const handleClearToken=() => {
     Cookies.set('tokenCookie','', { expires: new Date(0) })

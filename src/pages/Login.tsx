@@ -21,21 +21,14 @@ const Login: React.FC=() => {
     const navigate = useNavigate();
   
     
-  
-    const [formData, setFormData] = useState({
-        // Your form data fields
-    
-        email: '',
-        password:''
-        // Add more fields as needed
-      });
+
     
      
 
-     const  callApi= async()=>{
+     const  callApi= async(values: FormData)=>{
         try {
             // Make a POST request using Axios
-             await axios.post('https://localhost:7151/api/Authentication', formData)
+             await axios.post('https://localhost:7151/api/Authentication', values)
             .then(response=>{
                 Cookies.set('tokenCookie',response.data.token);
                 Cookies.set('idCookie',response.data.id);
@@ -70,8 +63,8 @@ const Login: React.FC=() => {
       password: Yup.string().required('Password is required'),
     }),
     onSubmit: (values:FormData ) => {
-        setFormData(values);
-       callApi();
+      
+       callApi(values);
        
     },
   });

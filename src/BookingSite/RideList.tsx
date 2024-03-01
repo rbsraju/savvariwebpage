@@ -51,7 +51,7 @@ const RideList: React.FC = () => {
                 <td>{ride.destination}</td>
                 <td>{ride.current}</td>
                 <td>{ride.account.name}</td>
-                <td>{ride.status==1?(<p>Pending</p>):(<p>Approved</p>)}
+                <td>{ride.status==1?(<p style={{ color: 'red' }}>Pending</p>):(<p style={{ color: 'green' }}>Approved</p>)}
                 </td>
                 <td style={{ display: "none" }}>{ride.rideId}</td>
               </tr>
