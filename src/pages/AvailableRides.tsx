@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../pages/axiosL&A'
 
 interface Record {
   id: string;
@@ -16,7 +17,7 @@ const AvailableRides: React.FC = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://localhost:7000/api/Ride/availableRides');
+      const response = await api.get('availableRides');
       setRecords(response.data);
     } catch (error) {
       console.error('Error fetching records:', error);
@@ -33,7 +34,7 @@ const AvailableRides: React.FC = () => {
     try {
        
       // Perform the POST API call to approve the record
-      const response = await axios.post('https://localhost:7000/api/Ride/updateRide',  record );
+      const response = await api.post('updateRide',  record );
       console.log('Record Approved:', response.data);
       fetchData();
       setShowSuccessAlert(true);
@@ -52,10 +53,10 @@ const AvailableRides: React.FC = () => {
     <div className="container">
           {showSuccessAlert && (
         <div className="alert alert-success mt-3" role="alert">
-          Record Approved Successfully!
+          Ride Approved 
         </div>
       )}
-      <h2 className="mt-4 mb-4">Record List</h2>
+      <h2 className="mt-4 mb-4">Available Rides</h2>
 
       <div className="row">
         {records.map((record) => (

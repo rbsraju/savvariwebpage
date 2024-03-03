@@ -10,15 +10,19 @@ import api from '../pages/axiosL&A'
 const RideList: React.FC = () => {
   const [rides, setRides] = useState([]);
   const [id, setid] = useState("");
-  var userRole = Cookies.get('idCookie');
+  var userid = Cookies.get('idCookie');
   
   useEffect(() => {
+    if(userid)
+    {
+      setid(userid);
+    }
     const fetchRides = async () => {
     
       try {
         // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
         const response = await api.get(
-          "/api/Ride/" + userRole
+          "" + userid
         );
         setRides(response.data);
       } catch (error) {

@@ -20,7 +20,8 @@ interface FormData {
 const Login: React.FC=() => {
     const navigate = useNavigate();
   
-    
+    const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
+    const[error, setError]=useState<string>('');
 
     
      
@@ -38,10 +39,21 @@ const Login: React.FC=() => {
             .catch(error=>{
                 if(error.response.status==400)
                 {
-                    alert(error.response.data);
+                  setShowSuccessAlert(true);
+                  alert(error.response.data);
+                  setTimeout(() => {
+                    setShowSuccessAlert(false);
+                    setError('');
+                  }, 2000);
                 }else if(error.response.status==404)
                 {
-                    alert(error.response.data);
+                  setShowSuccessAlert(true);
+                  setError('Wrong Credintials');
+               
+                  setTimeout(() => {
+                    setShowSuccessAlert(false);
+                    setError('');
+                  }, 2000);
                 }
             });
        
@@ -71,6 +83,11 @@ const Login: React.FC=() => {
 
   return (
     <div className="container">
+        {showSuccessAlert && (
+        <div className="alert alert-success mt-3" role="alert" >
+         {error}
+        </div>
+      )}
       <h1>Login</h1>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">

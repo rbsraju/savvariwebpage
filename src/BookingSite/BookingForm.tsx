@@ -86,7 +86,7 @@ const BookingForm: React.FC<BookingFormData> = () => {
             }
            
             // Make a POST request using Axios
-            const response =  await api.post('/api/Ride', rideData);
+            const response =  await api.post('', rideData);
            
            
             // Handle the response if needed

@@ -1,12 +1,36 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 //import '../css/SignUp.css';
+interface signInData{
+     name: string,
+      email: string,
+      phoneNumber: string,
+      gender: string,
+      password: string,
+      confirmPassword: string,
+}
 
 const SignUp: React.FC = () => {
+  const navigate = useNavigate();
+  const senddata= async (values:signInData)=>{
+
+    try{
+      await axios.post('https://localhost:7151/api/UserDetails', values)
+      .then( Response=>{   navigate('/');})
+      .catch(error=>{
+        alert(error.response.status);
+      })
+    }catch{
+
+    }
+
+  }
   const formik = useFormik({
     initialValues: {
-      fullName: '',
+      name: '',
       email: '',
       phoneNumber: '',
       gender: '',
@@ -14,17 +38,20 @@ const SignUp: React.FC = () => {
       confirmPassword: '',
     },
     validationSchema: Yup.object({
-      fullName: Yup.string().required('Full Name is required'),
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      phoneNumber: Yup.string().required('Phone Number is required'),
+      name: Yup.string().required('Full Name is required')
+       .matches(/^[A-Za-z]+$/, 'Full Name should only contain characters'),
+      email: Yup.string().email('Invalid email address').required('Email is required')
+      .matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/,'Invalid email address'),
+      phoneNumber: Yup.string().required('Phone Number is required')
+      .matches(/^\d{10}$/, 'Phone Number must be exactly 10 digits'),
       gender: Yup.string().required('Gender is required'),
       password: Yup.string().required('Password is required'). matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, 'Password must be at least 8 characters and contain at least one letter and one number'),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required('Confirm Password is required'),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values:signInData) => {
+      senddata(values);
     },
   });
 
@@ -36,14 +63,14 @@ const SignUp: React.FC = () => {
           <label htmlFor="fullName">Full Name</label>
           <input
             type="text"
-            id="fullName"
-            name="fullName"
+            id="name"
+            name="name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.fullName}
+            value={formik.values.name}
           />
-          {formik.touched.fullName && formik.errors.fullName && (
-            <div className="error">{formik.errors.fullName}</div>
+          {formik.touched.name && formik.errors.name && (
+            <div className="error">{formik.errors.name}</div>
           )}
         </div>
         <div className="form-group">

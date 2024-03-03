@@ -25,6 +25,7 @@ const  Navbar:React.FC = () => {
    const handleClearToken=() => {
     Cookies.set('tokenCookie','', { expires: new Date(0) })
     Cookies.set('idCookie','', { expires: new Date(0) })
+    Cookies.set('roleCookie','', { expires: new Date(0) })
 
     setToken('');
    }
