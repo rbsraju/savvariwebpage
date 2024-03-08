@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { format } from "util";
 import Cookies from "js-cookie";
-import api from '../pages/axiosL&A'
+import api from '../API/RidesInterceptor';
 //import '../css/Login.css';
 
 const RideList: React.FC = () => {
@@ -20,7 +20,7 @@ const RideList: React.FC = () => {
     const fetchRides = async () => {
     
       try {
-        // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
+        
         const response = await api.get(
           "" + userid
         );

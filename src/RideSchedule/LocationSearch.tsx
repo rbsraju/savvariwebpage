@@ -23,15 +23,24 @@ const LocationSearch: React.FC<LocationSearchProps> = ({ address, setAddress }) 
     }
   };
 
+  const searchOptions = {
+    componentRestrictions: { country: 'us' }, // Restrict to United States
+  };
+
   return (
-    <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
+    <PlacesAutocomplete
+      value={address}
+      onChange={handleChange}
+      onSelect={handleSelect}
+      searchOptions={searchOptions}
+    >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <div>
           <input {...getInputProps({ placeholder: 'Enter your destination' })} />
           <div>
             {loading && <div>Loading...</div>}
             {suggestions.map((suggestion) => (
-              <div  {...getSuggestionItemProps(suggestion)}>
+              <div {...getSuggestionItemProps(suggestion)}>
                 {suggestion.description}
               </div>
             ))}

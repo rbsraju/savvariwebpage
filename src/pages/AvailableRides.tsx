@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import api from '../pages/axiosL&A'
-
-interface Record {
-  id: string;
-  rideId: string;
-  destination: string;
-  current: string;
-  date: string;
-  time: string;
-  status: number;
-}
+import api from '../API/RidesInterceptor'
+import Cookies from 'js-cookie';
+import {RideDetails} from '../Types';
 
 const AvailableRides: React.FC = () => {
-  const [records, setRecords] = useState<Record[]>([]);
+  const [records, setRecords] = useState<RideDetails[]>([]);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
+  const [id, setId]=useState<string>('');
   const fetchData = async () => {
     try {
       const response = await api.get('availableRides');
@@ -25,16 +18,23 @@ const AvailableRides: React.FC = () => {
   };
   useEffect(() => {
     // Fetch records from your GET API
-    
-
+    const Id= Cookies.get('idCookie');
+     if(Id)
+     {
+        
+        setId(Id);
+     }
     fetchData();
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
-  const handleApprove = async (record: Record) => {
+  const handleApprove = async (record: RideDetails) => {
     try {
-       
-      // Perform the POST API call to approve the record
-      const response = await api.post('updateRide',  record );
+        const data = {
+            Record : record,
+            string: id,
+          };
+      //  POST API call to approve the record
+      const response = await api.post('updateRide',  data );
       console.log('Record Approved:', response.data);
       fetchData();
       setShowSuccessAlert(true);

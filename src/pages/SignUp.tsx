@@ -3,22 +3,16 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-//import '../css/SignUp.css';
-interface signInData{
-     name: string,
-      email: string,
-      phoneNumber: string,
-      gender: string,
-      password: string,
-      confirmPassword: string,
-}
+import {signInData} from '../Types';
+import api from '../API/axiosL&A';
+
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const senddata= async (values:signInData)=>{
 
     try{
-      await axios.post('https://localhost:7151/api/UserDetails', values)
+      await api.post('UserDetails', values)
       .then( Response=>{   navigate('/');})
       .catch(error=>{
         alert(error.response.status);

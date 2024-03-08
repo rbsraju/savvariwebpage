@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-//import '../css/Login.css'; // Import your CSS file
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../Slices/authSlice';
 import { Navigate, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import{ LoginFormData} from '../Types';
 import { setID, setRole } from '../Slices/idSlice';
+import api from '../API/axiosL&A';
 
 
-interface FormData {
-    
-    email: string;
-    password: string;
-    // Add other fields as needed
-  }
+
 const Login: React.FC=() => {
     const navigate = useNavigate();
   
@@ -26,14 +22,16 @@ const Login: React.FC=() => {
     
      
 
-     const  callApi= async(values: FormData)=>{
+     const  callApi= async(values: LoginFormData)=>{
         try {
-            // Make a POST request using Axios
-             await axios.post('https://localhost:7151/api/Authentication', values)
+        
+             await api.post('Authentication', values)
             .then(response=>{
+             
                 Cookies.set('tokenCookie',response.data.token);
                 Cookies.set('idCookie',response.data.id);
                 Cookies.set('roleCookie',response.data.role);
+              
                 navigate('/');
             })
             .catch(error=>{
@@ -74,7 +72,7 @@ const Login: React.FC=() => {
         email: Yup.string().required('email is required'),
       password: Yup.string().required('Password is required'),
     }),
-    onSubmit: (values:FormData ) => {
+    onSubmit: (values:LoginFormData ) => {
       
        callApi(values);
        

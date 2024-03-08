@@ -4,32 +4,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import LocationSearch from './LocationSearch';
 import { Form, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-import TimePicker from 'react-time-picker';
-import api from '../pages/axiosL&A'
-import { Form as bForm, Button, Col } from 'react-bootstrap';
-import { format } from 'util';
+import api from '../API/axiosL&A';
 import Cookies from 'js-cookie';
-//import '../css/BookCabForm.css';
+import { UserAccount,RideDetails } from '../Types';
 
 
-interface BookingFormData {
-    id:string;
-  destination: string;
-  current:string;
-  date: string;
-  time: string;
-  status:number;
-  account: Account;
-}
-interface Account {
-    id: string;
-    name: string;
-    email: string;
-  }
-  
 const BookingFormSchema = yup.object().shape({
   destination: yup.string().required('Destination is required'),
   current: yup.string().required('Current is required').notOneOf([yup.ref('destination')], 'Destination and current address should be different'),
@@ -42,21 +21,21 @@ const BookingFormSchema = yup.object().shape({
   }),
 });
 
-const BookingForm: React.FC<BookingFormData> = () => {
+const BookingForm: React.FC<RideDetails> = () => {
     const navigate = useNavigate();
     const [token, setToken] = useState<string>('');
     const [id, setId] = useState<string>('');
-    const [accounts, setAccounts] = useState<Account[]>([]);
+    const [accounts, setAccounts] = useState<UserAccount[]>([]);
 
   // Fetch account details using Axios on component mount
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
         // Make a GET request to fetch account details
-        const response = await axios.get('https://localhost:7151/DriverAccounts');
+        const response = await api.get('DriverAccounts');
         setAccounts(response.data);
       } catch (error) {
-        // Handle errors
+       
         console.error('Error fetching accounts:', error);
       }
     };
@@ -77,7 +56,7 @@ const BookingForm: React.FC<BookingFormData> = () => {
       }
     }, []);
 
-    const sendRideDetails=async (rideData:BookingFormData)=>{
+    const sendRideDetails=async (rideData:RideDetails)=>{
        
         try {
             if(id!=null){

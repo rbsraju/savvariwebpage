@@ -5,8 +5,8 @@ import  Navbar  from './pages/Navbar';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import './App.css';
 import SignUp from './pages/SignUp';
-import BookingForm from './BookingSite/BookingForm';
-import RideList from './BookingSite/RideList';
+import BookingForm from './RideSchedule/BookingForm';
+import RideList from './RideSchedule/RideList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AvailableRides from './pages/AvailableRides';
 
