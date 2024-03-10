@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import Home from './pages/HomePage';
 import Login from './pages/Login';
 import  Navbar  from './pages/Navbar'; 
@@ -9,6 +9,7 @@ import BookingForm from './RideSchedule/BookingForm';
 import RideList from './RideSchedule/RideList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AvailableRides from './pages/AvailableRides';
+import { AuthProvider } from './AuthContext';
 
 
 
@@ -19,12 +20,15 @@ const account = {
 };
 
 function App() {
+
   return (
     <div className="App">
+      <AuthProvider>
        <Navbar />
        
    <Router>
     <Routes>
+      
       <Route path="/signIn" element={<Login />} />
       <Route path="/signUp" element={<SignUp />} />
       <Route path="/" element={<Home />} />
@@ -32,11 +36,11 @@ function App() {
       <Route path="/RideStatus" element={<RideList/>}/>
       <Route path="*" element={<Navigate to="/" />} />
       <Route path="/availableRides" element={<AvailableRides/>}/>
-       
+     
        
     </Routes>
    </Router>
-   
+   </AuthProvider>
     </div>
   );
 }

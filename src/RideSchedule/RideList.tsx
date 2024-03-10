@@ -11,12 +11,14 @@ const RideList: React.FC = () => {
   const [rides, setRides] = useState([]);
   const [id, setid] = useState("");
   var userid = Cookies.get('idCookie');
+  const yourData = useSelector((state: RootState) => state.user.userDetails);
   
   useEffect(() => {
     if(userid)
     {
       setid(userid);
     }
+    alert(yourData);
     const fetchRides = async () => {
     
       try {

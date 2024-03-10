@@ -10,15 +10,21 @@ import Cookies from 'js-cookie';
 import{ LoginFormData} from '../Types';
 import { setID, setRole } from '../Slices/idSlice';
 import api from '../API/axiosL&A';
+import setUser from '../Slices/userSlice';
+
+import { RootState } from '../store';
+import { useAuth } from '../AuthContext';
 
 
 
 const Login: React.FC=() => {
+  const dispatch = useDispatch();
+ 
     const navigate = useNavigate();
-  
+    
     const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
     const[error, setError]=useState<string>('');
-
+    const {  setIsLoggedIn } = useAuth();
     
      
 
@@ -31,6 +37,7 @@ const Login: React.FC=() => {
                 Cookies.set('tokenCookie',response.data.token);
                 Cookies.set('idCookie',response.data.id);
                 Cookies.set('roleCookie',response.data.role);
+              setIsLoggedIn(true);
               
                 navigate('/');
             })

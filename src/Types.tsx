@@ -2,7 +2,7 @@ export interface LoginFormData {
     
     email: string;
     password: string;
-    // Add other fields as needed
+    
   }
   export interface signInData{
     name: string,
@@ -28,3 +28,4 @@ export interface RideDetails {
       name: string;
       email: string;
     }
+  
