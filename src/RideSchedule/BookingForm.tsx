@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import { UserAccount,RideDetails } from '../Types';
 
 
+
 const BookingFormSchema = yup.object().shape({
   destination: yup.string().required('Destination is required'),
   current: yup.string().required('Current is required').notOneOf([yup.ref('destination')], 'Destination and current address should be different'),
@@ -65,7 +66,7 @@ const BookingForm: React.FC<RideDetails> = () => {
             }
            
             // Make a POST request using Axios
-            const response =  await api.post('', rideData);
+            const response =  await api.post('Ride', rideData);
            
            
             // Handle the response if needed

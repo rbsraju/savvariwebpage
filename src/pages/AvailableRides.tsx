@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import api from '../API/RidesInterceptor'
+
+import api from '../API/axiosL&A';
 import Cookies from 'js-cookie';
 import {RideDetails} from '../Types';
 
@@ -10,7 +10,7 @@ const AvailableRides: React.FC = () => {
   const [id, setId]=useState<string>('');
   const fetchData = async () => {
     try {
-      const response = await api.get('availableRides');
+      const response = await api.get('Ride/GetAllAvailableRides');
       setRecords(response.data);
     } catch (error) {
       console.error('Error fetching records:', error);
@@ -29,12 +29,9 @@ const AvailableRides: React.FC = () => {
 
   const handleApprove = async (record: RideDetails) => {
     try {
-        const data = {
-            Record : record,
-            string: id,
-          };
+        
       //  POST API call to approve the record
-      const response = await api.post('updateRide',  data );
+      const response = await api.post<RideDetails[]>('Ride/ApproveRide/'+id,  record );
       console.log('Record Approved:', response.data);
       fetchData();
       setShowSuccessAlert(true);
@@ -50,7 +47,7 @@ const AvailableRides: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
           {showSuccessAlert && (
         <div className="alert alert-success mt-3" role="alert">
           Ride Approved 
@@ -59,7 +56,7 @@ const AvailableRides: React.FC = () => {
       <h2 className="mt-4 mb-4">Available Rides</h2>
 
       <div className="row">
-        {records.map((record) => (
+        {records.filter(ride => ride.account.id === id || !ride.account.id).map((record) => (
          
          record.status === 1 && (
             <div key={record.rideId} className="col-md-5">

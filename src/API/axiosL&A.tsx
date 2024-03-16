@@ -4,7 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-  baseURL: 'https://localhost:7151/api/', 
+  baseURL: 'https://localhost:7235/ApiGateway/', 
 });
 
 api.interceptors.request.use(

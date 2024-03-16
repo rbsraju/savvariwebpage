@@ -7,7 +7,7 @@ import { setToken } from '../Slices/authSlice';
 import { Navigate, redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import{ LoginFormData} from '../Types';
+import{ LoginFormData, UserAccount} from '../Types';
 import { setID, setRole } from '../Slices/idSlice';
 import api from '../API/axiosL&A';
 import setUser from '../Slices/userSlice';
@@ -31,13 +31,15 @@ const Login: React.FC=() => {
      const  callApi= async(values: LoginFormData)=>{
         try {
         
-             await api.post('Authentication', values)
+             await api.post('Aunticate', values)
             .then(response=>{
              
                 Cookies.set('tokenCookie',response.data.token);
                 Cookies.set('idCookie',response.data.id);
                 Cookies.set('roleCookie',response.data.role);
+                
               setIsLoggedIn(true);
+              const user = response.data as UserAccount; 
               
                 navigate('/');
             })

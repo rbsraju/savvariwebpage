@@ -70,3 +70,7 @@ button {
 h1{
   text-align :center;
 }
+.container {
+  height: 500px; /* Set the height to your desired value */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
